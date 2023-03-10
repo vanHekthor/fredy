@@ -7,7 +7,7 @@ import ToastsContainer from './components/toasts/ToastContainer';
 import JobMutation from './views/jobs/mutation/JobMutation';
 import UserMutator from './views/user/mutation/UserMutator';
 import ToastContext from './components/toasts/ToastContext';
-import JobInsight from './views/jobs/insights/JobInsight';
+import JobInsight from './views/jobs/insights/JobInsight.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import useToast from './components/toasts/useToast';
 import { Switch, Redirect } from 'react-router-dom';
@@ -27,14 +27,17 @@ export default function FredyApp() {
   const [loading, setLoading] = React.useState(true);
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  useEffect(async () => {
-    await dispatch.provider.getProvider();
-    await dispatch.jobs.getJobs();
-    await dispatch.jobs.getProcessingTimes();
-    await dispatch.notificationAdapter.getAdapter();
-    await dispatch.user.getCurrentUser();
+  useEffect(() => {
+    async function init() {
+      await dispatch.provider.getProvider();
+      await dispatch.jobs.getJobs();
+      await dispatch.jobs.getProcessingTimes();
+      await dispatch.notificationAdapter.getAdapter();
+      await dispatch.user.getCurrentUser();
 
-    setLoading(false);
+      setLoading(false);
+    }
+    init();
   }, [currentUser?.userId]);
 
   const needsLogin = () => {
