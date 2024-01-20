@@ -1,6 +1,6 @@
-const utils = require('../../lib/utils');
-const assert = require('assert');
-const expect = require('chai').expect;
+import utils from '../../lib/utils.js';
+import assert from 'assert';
+import { expect } from 'chai';
 
 const fakeWorkingHoursConfig = (from, to) => ({
   workingHours: {
@@ -8,7 +8,6 @@ const fakeWorkingHoursConfig = (from, to) => ({
     from,
   },
 });
-
 describe('utils', () => {
   describe('#isOneOf()', () => {
     it('should be false', () => {
@@ -18,7 +17,6 @@ describe('utils', () => {
       assert.equal(utils.isOneOf('bla blub blubber', ['bla']), true);
     });
   });
-
   describe('#duringWorkingHoursOrNotSet()', () => {
     it('should be false', () => {
       expect(utils.duringWorkingHoursOrNotSet(fakeWorkingHoursConfig('12:00', '13:00'), 0)).to.be.false;
